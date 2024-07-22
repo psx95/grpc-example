@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package invoiceservice;
+
+option go_package = "invoiceservice/gen_proto";
+
+message CreateRequest {
+	string from = 1;
+	string to = 2;
+	Amount total = 3;
+}
+
+message Amount {
+	string currency = 1;
+	int64 amount = 2;
+}
+
+message CreateResponse {
+	bytes pdf = 1;
+}
+
+message UUID {
+	string value = 1;
+}
+
+message FetchRequest {
+	UUID id = 1;
+}
+
+message FetchResponse {
+	bytes pdf = 1;
+}
+
+// RPCs used to interface with the service
+service Invoicer {
+	// Creates an invoice
+	rpc Create (CreateRequest) returns (CreateResponse);
+	
+	// Fetches an invoice
+	rpc Fetch (FetchRequest) returns (FetchResponse);
+}
+
