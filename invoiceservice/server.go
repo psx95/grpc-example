@@ -13,7 +13,7 @@ type InvoiceGRPCServer struct {
 }
 
 func (server *InvoiceGRPCServer) Create(ctx context.Context, req *pb.CreateRequest) (*pb.CreateResponse, error) {
-	fmt.Println("Create called")
+	fmt.Printf("Create called with request: %v\n", req)
 	resp := &pb.CreateResponse{
 		Pdf: nil,
 	}
