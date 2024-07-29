@@ -9,6 +9,7 @@ import (
 	pb "invoiceservice/pb/invoiceservice/gen_proto"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 var (
@@ -25,6 +26,10 @@ func main() {
 	}
 	server := grpc.NewServer()
 	pb.RegisterInvoicerServer(server, &InvoiceGRPCServer{})
+
+	// Register reflection service on the server
+	// allows the clients to get information about the server, such as the supported methods
+	reflection.Register(server)
 
 	log.Printf("server listening at %v", lis.Addr())
 	if err := server.Serve(lis); err != nil {
